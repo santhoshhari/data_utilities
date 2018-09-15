@@ -9,7 +9,6 @@ def regularized_target_encoding(train, col, target_col, splits=5):
     :param col: column name on which target mean encoding is to be performed
     :param target_col: name of the target column
     :param splits: Number of folds to split the data for regularization
-
     :return: training data with regularized mean encoded features
     """
     kf = KFold(n_splits=splits)
@@ -30,7 +29,6 @@ def mean_encoding_test(test, train, col, target_col):
     :param train: training data (pandas dataframe)
     :param col: column name on which target mean encoding is to be performed
     :param target_col : name of the target column
-
     :return: test data with regularized mean encoded features
     """
     global_mean = train[target_col].mean()

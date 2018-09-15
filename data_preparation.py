@@ -1,5 +1,5 @@
 import pandas as pd
-from pandas.core.dtypes.common import is_string_dtype,is_numeric_dtype
+from pandas.core.dtypes.common import is_string_dtype, is_numeric_dtype
 
 
 def train_cats(inp_df):
@@ -8,7 +8,6 @@ def train_cats(inp_df):
        categorical values. This applies the changes inplace.
 
     :param inp_df: A pandas dataframe. Any columns of strings will be changed to categorical values.
-
     :return: None
     """
     for col_name, col in inp_df.items():
@@ -25,7 +24,6 @@ def apply_cats(tst_df, trn_df):
     :param trn_df: A pandas dataframe. When creating a category for df, it looks up the
             what the category's code were in trn and makes those the category codes
             for df.
-
     :return: None
     """
 
@@ -41,7 +39,6 @@ def numericalize(inp_df, col, name):
     :param inp_df: A pandas dataframe. inp_df[name] will be filled with the integer codes from col.
     :param col: The column that is to be changed into the categories.
     :param name: Desired column name after label encoding
-
     :return: DataFrame with label encoded column added
     """
     if not is_numeric_dtype(col):
@@ -56,7 +53,6 @@ def proc_df(df, y_fld):
 
     :param df: The data frame you that is to be processed.
     :param y_fld: The name of the response variable
-
     :return: List containing the final dataframe and its y values
     """
     df = df.copy()

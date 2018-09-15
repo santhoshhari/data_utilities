@@ -22,7 +22,6 @@ def train_model(curr_params, param_dict, Xtrain, Xvalid, Ytrain, Yvalid,
     :param Yvalid: Validation labels
     :param metric: Metric to compute model performance on
     :param model_type: Model type - classification/regression
-
     :return: Tuned model, train score and validation score computed using the metric
     """
     params_copy = param_dict.copy()
@@ -53,7 +52,6 @@ def choose_params(param_dict, curr_params=None):
 
     :param param_dict: Ordered dictionary of hyper-parameter search space
     :param curr_params: Dict of current hyper-parameters
-
     :return: Dictionary of sampled parameters
     """
     if curr_params:
@@ -95,7 +93,6 @@ def simulate_annealing(param_dict, const_param, X_train, X_valid,
     :param beta: constant in probability estimate
     :param T_0: Initial temperature
     :param update_iters: # of iterations required to update temperature
-
     :return: DataFrame of the parameters explored and corresponding model performance
     """
     columns = [*param_dict.keys()] + ['Metric', 'Best Metric', 'Train Metric']
