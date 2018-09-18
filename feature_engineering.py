@@ -11,7 +11,7 @@ def regularized_target_encoding(train, col, target_col, splits=5):
     :param splits: Number of folds to split the data for regularization
     :return: training data with regularized mean encoded features
     """
-    kf = KFold(n_splits=splits)
+    kf = KFold(n_splits=splits, random_state=42)
     global_mean = train[target_col].mean()
     for train_index, test_index in kf.split(train):
         kfold_mean = train.iloc[train_index].groupby(col)[target_col].mean()
