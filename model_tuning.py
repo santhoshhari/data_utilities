@@ -12,68 +12,10 @@ from xgboost import XGBClassifier, XGBRegressor
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, forest
 from sklearn.linear_model import LogisticRegression, Ridge
 from data_utilities.feature_engineering import *
+from data_utilities.random_foorest_support import *
+from data_utilities.data_preparation import *
 from tqdm import tqdm, tqdm_notebook
 tqdm.monitor_interval = 0
-
-
-def set_rf_samples(n):
-    """
-    Changes Scikit learn's random forests to give each tree a random sample of
-    n random rows.
-    """
-    forest._generate_sample_indices = (lambda rs, n_samples:
-        forest.check_random_state(rs).randint(0, n_samples, n))
-
-def reset_rf_samples():
-    """
-    Undoes the changes produced by set_rf_samples.
-    """
-    forest._generate_sample_indices = (lambda rs, n_samples:
-        forest.check_random_state(rs).randint(0, n_samples, n_samples))
-
-
-def train_cats(inp_df):
-    """
-    Function to change any columns of strings in a panda's dataframe to a column of
-       categorical values. This applies the changes inplace.
-
-    :param inp_df: A pandas dataframe. Any columns of strings will be changed to categorical values.
-    :return: None
-    """
-    for col_name, col in inp_df.items():
-        if is_string_dtype(col):
-            inp_df[col_name] = col.astype('category').cat.as_ordered()
-
-
-def apply_cats(tst_df, trn_df):
-    """
-    Function to change any columns of strings in tst_df into categorical variables using trn_df as
-       a template for the category codes.
-
-    :param tst_df: A pandas dataframe. Any columns of strings will be changed to categorical values.
-    :param trn_df: A pandas dataframe. When creating a category for df, it looks up the
-            what the category's code were in trn and makes those the category codes
-            for df.
-    :return: None
-    """
-
-    for n, c in tst_df.items():
-        if (n in trn_df.columns) and (trn_df[n].dtype.name == 'category'):
-            tst_df[n] = pd.Categorical(c, categories=trn_df[n].cat.categories, ordered=True)
-
-
-def numericalize(inp_df, col, name):
-    """
-    Function to changes the column col from a categorical type to it's integer codes (label encoding).
-
-    :param inp_df: A pandas dataframe. inp_df[name] will be filled with the integer codes from col.
-    :param col: The column that is to be changed into the categories.
-    :param name: Desired column name after label encoding
-    :return: DataFrame with label encoded column added
-    """
-    if not is_numeric_dtype(col):
-        inp_df[name] = col.cat.codes + 1
-    return inp_df
 
 
 def train_rf_model(param_dict, Xtrain, Xvalid, Ytrain, Yvalid,

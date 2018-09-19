@@ -90,7 +90,6 @@ def plot_pdp(model, X_train, feat, clusters=None, feat_name=None):
 def plot_pdp_interact(model, X_train, feats):
     """
     Function to plot dependency of target variable on the feature
-
     :param model: Trained model
     :param X_train: Datafram to get prediction of model from
     :param feats: List (size 2) of feature to plot target dependency for
