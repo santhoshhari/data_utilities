@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.insert(0, os.getcwd())
-
 import numpy as np
 import pandas as pd
 from pandas.core.dtypes.common import is_string_dtype, is_numeric_dtype
