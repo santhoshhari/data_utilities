@@ -202,6 +202,13 @@ def train_model_regularized_encoding_cv(train, target_col, param_grid, cat_cols,
     """
     kf = KFold(cv_folds, random_state=42)
     columns = [*param_grid[0].keys()] + ['train_score', 'valid_score']
+
+    # Remove class_weight from the columns list
+    try:
+        columns.remove('class_weight')
+    except ValueError:
+        pass
+    # Create dataframe with the hyper-parameters as columns
     results = pd.DataFrame(columns=columns)
     for params in tqdm_notebook(param_grid):
         train_scores = list()
@@ -262,6 +269,14 @@ def train_model_regularized_encoding_cv(train, target_col, param_grid, cat_cols,
             valid_scores.append(valid_score)
 
         to_write = params.copy()
+        class_weights = to_write.pop('class_weight', None)
+        if class_weights and class_weights != 'balanced':
+            try:
+                for k, v in class_weights.items():
+                    to_write[f'class_{k}'] = v
+            except AttributeError:
+                to_write['class_1'] = 'balanced'
+                to_write['class_0'] = 1
         to_write['train_score'] = np.mean(train_scores)
         to_write['valid_score'] = np.mean(valid_scores)
         results = results.append(pd.DataFrame.from_dict(to_write, orient='index').T)
