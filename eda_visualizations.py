@@ -16,7 +16,7 @@ def target_mean_encode(df, cols, target_col):
     global_mean = df[target_col].mean()
     for col in cols:
         mean_col = df.groupby(col)[target_col].mean()
-        df[col] = df[col].map(mean_col)
+        df.loc[col] = df.loc[col].map(mean_col)
         df[col].fillna(global_mean, inplace=True)
     return
 

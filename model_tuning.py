@@ -12,7 +12,7 @@ from xgboost import XGBClassifier, XGBRegressor
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, forest
 from sklearn.linear_model import LogisticRegression, Ridge
 from data_utilities.feature_engineering import *
-from data_utilities.random_foorest_support import *
+from data_utilities.random_forest_support import *
 from data_utilities.data_preparation import *
 from tqdm import tqdm, tqdm_notebook
 tqdm.monitor_interval = 0
